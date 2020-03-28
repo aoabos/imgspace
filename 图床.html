@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>新浪图床</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8" />
+
+        <!-- Styles -->
+        <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .full-height {
+                height: 100vh;
+            }
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            .title {
+                font-size: 36px;
+                padding: 20px;
+            }
+				.logo img {
+        width: 150px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+	.logo img{
+    -webkit-transition: 0.4s;
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;
+}
+  
+    .logo img:hover{
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+} 
+logo{
+    -webkit-transition: 0.4s;
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;
+}
+  
+logo:hover{
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+}
+.button {
+    background-color: #55555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+        </style>
+<!-- 按钮样式 -->
+<style>
+.button {
+    background-color: white;
+    color: black;
+    border: 1px solid #555555;
+}
+</style>
+<!-- 按钮样式1 -->
+<style>
+.file {
+    position: relative;
+    display: inline-block;
+    background: #FFFFFF;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #555555;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #FFFFFF;
+    border-color: #555555;
+    color: #555555;
+    text-decoration: none;
+}
+</style>
+<!-- DIV不换行 -->
+<style> 
+div7{ float:left} 
+</style>
+<!-- DIV7文字样式 -->
+<style>
+.file1 {
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #8B8878;
+}
+</style>
+    </head>
+    <body>
+	
+        <div class="flex-center position-ref full-height">
+            <div class="content">
+                <div class="title">
+				<p class="logo">
+				<img src="https://fadedream.com/tx.png" alt="">
+				</p>
+				<b><h3>Why We Play</h3></b>
+               </div>
+<form method='post'>
+<br/>
+<div id="box" class="button"><a href="javascript:;" class="file">选择文件<input type="file" name="" id="选图"></a>
+<div7 class="file1">点击这里上传文件</div7>
+<!-- <input class="button" type="file" id="选图"> -->
+</div>
+</form>
+<img id="图片" style=" width: 100%;">
+<hr>
+<b>选取你要上传的图片</b>
+<p id="文本" style="background: rgba(255, 251, 251, 0.7);display: block;width: 100%;font-size: 14px;color: #555;border: 1px solid #ccc;border-radius: 4px;"></p>
+            </div>
+        </div>
+					   <script>
+选图.onchange=function(){
+if(!this.files||!this.files[0])
+return alert('选取文件出错！')
+    var
+    图片文件=this.files[0]
+if(图片文件.type.indexOf('image')!=0)
+return alert('这不是一个图像或音频！')
+    UP(图片文件,function(pid){
+        文本.innerHTML=
+        图片.src='https://ww2.sinaimg.cn/large/'+pid+ '.jpg'
+    },function(){
+        alert('上传文件出错了！')
+    },function(进度){
+        文本.innerHTML=进度*100+'%'
+    })
+}
+</script>
+<script>var
+UP=function(o,success,error,upload,x,file,A){
+    if(typeof success=='function')
+        file=o;
+    else{
+        if(!o.file)
+            return console.log('并没有传入需要上传的文件')
+        if(A=o.success)
+            success=A
+        if(A=o.upload)
+            upload=A
+        if(A=o.error)
+            error=A
+    }
+    x=new XMLHttpRequest()
+    x.open('POST','https://x.mouto.org/wb/x.php?up&_r='+Math.random(),1)
+    if(upload)
+        x.upload.onprogress=function(e){
+            upload(e.loaded/e.total)
+        }
+    x.onload=function(r){
+        r=JSON.parse(x.responseText)
+        if(r.error&&error)
+            return error(r.error)
+        if(r.pid&&success)
+            return success(r.pid)
+    }
+    x.send(file)
+}</script>
+    </body>
+</html>
